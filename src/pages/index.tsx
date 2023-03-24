@@ -4,11 +4,16 @@ import Link from "next/link";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { type RouterOutputs } from "~/utils/api";
 import { api } from "~/utils/api";
+import Image from "next/image";
 type PostWithUser = RouterOutputs["posts"]["getAll"][number];
 const PostView = (post: PostWithUser) => {
   return (
     <div key={post.id} className="flex gap-3 border-b border-slate-400 p-4">
-      <img src={post.author.image} className="h-14 w-14 rounded-full" />
+      <Image
+        src={post.author.image || "http://userprofile.co"}
+        className="h-14 w-14 rounded-full"
+        alt="Profile Pic"
+      />
       <div className="flex flex-col">
         <div className="flex gap-1 text-slate-300">
           <span>@{post.author.name}</span>
