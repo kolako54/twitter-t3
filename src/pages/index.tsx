@@ -38,8 +38,8 @@ const Home: NextPage = () => {
     console.log(user);
     return (
       <div className="flex w-full gap-3">
-        <img
-          src={user?.image}
+        <Image
+          src={user.image || "http://userprofile.co"}
           className="h-14 w-14 rounded-full"
           alt="Profile image"
         />
