@@ -10,6 +10,8 @@ const PostView = (post: PostWithUser) => {
   return (
     <div key={post.id} className="flex gap-3 border-b border-slate-400 p-4">
       <Image
+        width={56}
+        height={56}
         src={post.author.image || "http://userprofile.co"}
         className="h-14 w-14 rounded-full"
         alt="Profile Pic"
@@ -40,6 +42,8 @@ const Home: NextPage = () => {
       <div className="flex w-full gap-3">
         <Image
           src={user.image || "http://userprofile.co"}
+          width={56}
+          height={56}
           className="h-14 w-14 rounded-full"
           alt="Profile image"
         />
