@@ -53,6 +53,7 @@ model User {
     image         String?
     accounts      Account[]
     sessions      Session[]
+    Post          Post[]
 }
 
 model VerificationToken {
@@ -67,6 +68,7 @@ model Post {
     id        String   @id @default(cuid())
     createdAt DateTime @default(now())
     content   String   @db.VarChar(255)
+    author    User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
     authorId  String
 
     @@index([authorId])

@@ -2,13 +2,27 @@ import { type NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
 import { signIn, signOut, useSession } from "next-auth/react";
-
+import { type RouterOutputs } from "~/utils/api";
 import { api } from "~/utils/api";
-
+type PostWithUser = RouterOutputs["posts"]["getAll"][number];
+const PostView = (post: PostWithUser) => {
+  return (
+    <div key={post.id} className="flex gap-3 border-b border-slate-400 p-4">
+      <img src={post.author.image} className="h-14 w-14 rounded-full" />
+      <div className="flex flex-col">
+        <div className="flex gap-1 text-slate-300">
+          <span>@{post.author.name}</span>
+          <span className="font-thin"> . 1 hour ago</span>
+        </div>
+        <span> {post.content}</span>
+      </div>
+    </div>
+  );
+};
 const Home: NextPage = () => {
   const { data: session } = useSession();
   const { data: posts, isLoading } = api.posts.getAll.useQuery();
-  console.log(posts);
+  console.log("postsss", posts);
   if (isLoading) return <div>Loading...</div>;
   if (!posts) return <div>Something went wrong</div>;
   const CreatePostWizard = () => {
@@ -16,7 +30,7 @@ const Home: NextPage = () => {
     const user = session?.user;
 
     if (!user) return null;
-    console.log(user)
+    console.log(user);
     return (
       <div className="flex w-full gap-3">
         <img
@@ -51,11 +65,7 @@ const Home: NextPage = () => {
           </div>
           <div className="flex flex-col">
             {posts?.map((post) => {
-              return (
-                <div key={post.id} className="border-b border-slate-400 p-8">
-                  {post.content}{" "}
-                </div>
-              );
+              return <PostView {...post} key={post.id} />;
             })}
           </div>
         </div>
